@@ -3,8 +3,8 @@ from typing import List, Optional, Dict, TextIO, Tuple
 from pathlib import Path
 from pyzbar.pyzbar import ZBarSymbol
 import pyzbar.pyzbar as pz
-
-
+import numpy as np
+import pyboof as pb
 import cv2
 
 
@@ -71,6 +71,24 @@ class ZBarDetector(QRCodeCVImgScanner):
 
         return len(decoded), len(decoded)
 
+# Requires Java 14 or newer as default JRE
+class BoofCVDetector(QRCodePathScanner):
+    def __init__(self, name: str = "BoofCV"):
+        super().__init__(name)
+
+    def scan(self, img_path):
+        detector = pb.FactoryFiducial(np.uint8).qrcode()
+
+        #Load image in grayscale
+        bcv_img = pb.load_single_band(img_path, np.uint8)
+
+        detector.detect(bcv_img)
+
+        if(len(detector.detections) > 0):
+            print(detector.detections[0].message)
+
+        return len(detector.detections) + len(detector.failures), len(detector.detections)
+
 
 def benchmark_image(image_path: str,
                     open_scanners: Optional[List[QRCodeOpenScanner]],
@@ -94,7 +112,7 @@ def benchmark_image(image_path: str,
         opencv_scanners = [OpenCVDetector(), ZBarDetector()]
 
     if path_scanners is None:
-        path_scanners = []
+        path_scanners = [BoofCVDetector()]
 
     # Initialize results dict
     scan_results: Dict[str, QRCodeScanResults] = {}
@@ -105,7 +123,7 @@ def benchmark_image(image_path: str,
     for opencv_scanner in opencv_scanners:
         scan_results[opencv_scanner.name] = QRCodeScanResults(opencv_scanner)
 
-    for path_scanner in opencv_scanners:
+    for path_scanner in path_scanners:
         scan_results[path_scanner.name] = QRCodeScanResults(path_scanner)
 
     if len(open_scanners) > 0:
@@ -159,8 +177,9 @@ def benchmark_image(image_path: str,
 
 
 if __name__ == '__main__':
+    pb.init_memmap()
 
-    results = benchmark_image(r"C:\Users\sfrazee\Downloads\labelbox_upload\DJI_0290\DJI_0290-0h0m8s141.png",
+    results = benchmark_image(r"C:\Users\sfrazee\Downloads\labelbox_upload\DJI_0294\DJI_0294-0h0m0s0.png",
                               None, None, None)
 
     for result in results:

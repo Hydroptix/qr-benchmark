@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ccd2fe32a897c6bdfc95eb9ed0b137f5c1f5642593b4f26776047ee0c2e69660"
+            "sha256": "235567d2f673376d97fab2ea152d389f05ca833a86690af2472882628b48923b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -77,6 +77,20 @@
             "index": "pypi",
             "version": "==4.4.0.44"
         },
+        "py4j": {
+            "hashes": [
+                "sha256:51d994ae19a3eb35eaa45851081e25922500d59875606bf27ac0d40929724939",
+                "sha256:8329bb156a0cf37be9642a2a060dbdb627b5fcb827919be65d95102daccca274"
+            ],
+            "version": "==0.10.8.1"
+        },
+        "pyboof": {
+            "hashes": [
+                "sha256:8e06ce48751b893c01dd1fd25c412e00d368a9dac5cca9c4b2bc205cdf443269"
+            ],
+            "index": "pypi",
+            "version": "==0.36.1"
+        },
         "pyzbar": {
             "hashes": [
                 "sha256:0e204b904e093e5e75aa85e0203bb0e02888105732a509b51f31cff400f34265",
@@ -85,6 +99,19 @@
             ],
             "index": "pypi",
             "version": "==0.1.8"
+        },
+        "six": {
+            "hashes": [
+                "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259",
+                "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
+            ],
+            "version": "==1.15.0"
+        },
+        "transforms3d": {
+            "hashes": [
+                "sha256:404c7797c78aa461cb8043081901fc5517cef342d5ff56becd74a7967ba88d78"
+            ],
+            "version": "==0.3.1"
         }
     },
     "develop": {}
